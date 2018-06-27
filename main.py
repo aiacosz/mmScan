@@ -36,15 +36,15 @@ if __name__ == '__main__':
         mmObj.xpltUserEmail()
         #mmObj.XptGetURemainder()
         mmObj.XptGetUsersLogin()
-        if results.brute:
-            answer = input("[+] Start brute force ? Y/n: ").lower()
-            if answer[0] == "y":
-                urllib3.disable_warnings()
-                bruteObj = Brute(results.url, results.random_agent)
-                bruteObj.CleanUrl()
-                bruteObj.RandomAgent()
-                bruteObj.DoBruteForce(results.users_file, results.password_file)
-            else:
-                answer[0] == "n"
-                print("[+] Thanks to use this poor tool :(" )
+    if results.brute:
+        answer = input("[+] Start brute force ? Y/n: ").lower()
+        if answer[0] == "y":
+            urllib3.disable_warnings()
+            bruteObj = Brute(results.url, results.random_agent)
+            bruteObj.CleanUrl()
+            bruteObj.RandomAgent()
+            bruteObj.DoBruteForce(results.users_file, results.password_file)
+        else:
+            answer[0] == "n"
+            print("[+] Thanks to use this poor tool :(" )
 
