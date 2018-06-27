@@ -56,3 +56,7 @@ class Brute:
                                     print("[+] FOUND ONE USER {}:{}".format(user, p))     
                         except Exception as e:
                             print("[+] Error {}".format(e))
+            if len(users_found) == 0:
+                print("[-] Brute force failed .. no users were founded")
+
+                    
