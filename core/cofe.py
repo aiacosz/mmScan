@@ -11,7 +11,6 @@ from txtAndColors import ask, critical, banner, notice, warning, info, vulnerabl
 class Cofe:
     
     def __init__(self, url, max_threads, user_agent):
-        print(display("[+] Target {}".format(url)))
         self.url = url
         self.agent = user_agent
         self.max_threads = int(max_threads)
@@ -71,7 +70,6 @@ class Cofe:
 
     """ self explained """
     def ToString(self):
-        print(warning("=== MMPwN ==="))
         print(warning("URL : {}".format(self.url)))
         print(warning("Agent: {}".format(self.agent)))
 

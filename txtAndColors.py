@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-VERSION = 1.0
+VERSION = 1.1
 
 def ask(msg):
     return "\033[1m " + msg + "\033[0m"

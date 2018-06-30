@@ -8,6 +8,7 @@ from txtAndColors import banner, critical
 import requests
 import argparse
 import urllib3
+import sys
 
 
 if __name__ == '__main__':
@@ -21,8 +22,67 @@ if __name__ == '__main__':
     parser.add_argument('--password-file', action='store', dest='password_file', help='Password file')
     results = parser.parse_args()
 
+    if results.url and results.brute:
+        if results.users_file == None:
+            print(warning("[+] Users file is required ! \n python3 main.py -u mmpub.com --random-agent --brute --users-file ex.txt"))
+            exit()
+        if results.password_file == None:
+            print(warning("[+] Using a default password list !"))
+            urllib3.disable_warnings()
+            mmObj = Cofe(results.url, results.max_threads, results.random_agent)
+            mmObj.RandomAgent()
+            mmObj.CleanUrl()
+            mmObj.ToString()
+            mmObj.IsUpOrDown()
+            mmObj.IsRobots()
+            mmObj.HaveDWR()
+            mmObj.GetAdminLogin()
+            mmObj.xpltUserEmail()
+            #mmObj.XptGetURemainder()
+            mmObj.XptGetUsersLogin()
+            #mmObj.SearchDWRScripts()
+            answer = input(ask("[+] Start brute force ? Y/n: ")).lower()
+            if answer[0] == "y":
+                urllib3.disable_warnings()
+                bruteObj = Brute(results.url, results.random_agent)
+                bruteObj.CleanUrl()
+                bruteObj.RandomAgent()
+                bruteObj.DoBruteForceDefaultPass(results.users_file)
+                exit()
+            else:
+                answer[0] == "n"
+                print(display("[-] Thanks to use this tool.. issues are welcome.."))
+                sys.exit()
+                exit()
+        
+        if results.password_file:
+            urllib3.disable_warnings()
+            mmObj = Cofe(results.url, results.max_threads, results.random_agent)
+            mmObj.RandomAgent()
+            mmObj.CleanUrl()
+            mmObj.ToString()
+            mmObj.IsUpOrDown()
+            mmObj.IsRobots()
+            mmObj.HaveDWR()
+            mmObj.GetAdminLogin()
+            mmObj.xpltUserEmail()
+            #mmObj.XptGetURemainder()
+            mmObj.XptGetUsersLogin()
+            #mmObj.SearchDWRScripts()
+            answer = input(ask("[+] Start brute force ? Y/n: ")).lower()
+            if answer[0] == "y":
+                urllib3.disable_warnings()
+                bruteObj = Brute(results.url, results.random_agent)
+                bruteObj.CleanUrl()
+                bruteObj.RandomAgent()
+                bruteObj.DoBruteForce(results.users_file, results.password_file)
+                exit()
+            else:
+                answer[0] == "n"
+                print(display("[-] Thanks to use this tool.. issues are welcome.."))
+                exit()
 
-    if results.url != None:
+    if results.url:
         urllib3.disable_warnings()
         mmObj = Cofe(results.url, results.max_threads, results.random_agent)
         mmObj.RandomAgent()
@@ -32,31 +92,7 @@ if __name__ == '__main__':
         mmObj.IsRobots()
         mmObj.HaveDWR()
         mmObj.GetAdminLogin()
-        mmObj.SearchDWRScripts()
         mmObj.xpltUserEmail()
         #mmObj.XptGetURemainder()
         mmObj.XptGetUsersLogin()
-        doBrute = input("Do you like to performe a brute force: y/n").lower()
-        if doBrute[0] == "y":
-            urllib3.disable_warnings()
-            bruteObj = Brute(results.url, results.random_agent)
-            bruteObj.CleanUrl()
-            bruteObj.RandomAgent()
-            bruteObj.DoBruteForce(results.users_file, results.password_file)
-        else:
-            print("[-] Thanks to use this tool.. issues are welcome..")
-            exit()
-
-    if results.brute:
-        answer = input("[+] Start brute force ? Y/n: ").lower()
-        if answer[0] == "y":
-            urllib3.disable_warnings()
-            bruteObj = Brute(results.url, results.random_agent)
-            bruteObj.CleanUrl()
-            bruteObj.RandomAgent()
-            bruteObj.DoBruteForce(results.users_file, results.password_file)
-        else:
-            answer[0] == "n"
-            print("[-] Thanks to use this tool.. issues are welcome..")
-            exit()
-
+        #mmObj.SearchDWRScripts()
